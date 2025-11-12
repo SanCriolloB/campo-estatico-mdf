@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: campo-estatico-mdf
+Version: 0.1.0
+Summary: Solver 2D de Laplace por diferencias finitas (Jacobi/Gauss-Seidel) y cálculo del campo eléctrico.
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.22
+
+# campo-estatico-mdf
+
+Backend (método de diferencias finitas) para resolver el potencial electrostático 2D (ecuación de Laplace),
+con métodos Jacobi y Gauss-Seidel, y cálculo del campo eléctrico **E = -∇V**.
+
+## Fase 1 (núcleo)
+- Clase `LaplaceSolver2D`
+- Discretización N×N con contornos Dirichlet
+- Solvers Jacobi y Gauss-Seidel
+- Cálculo de campo eléctrico (Ex, Ey)
+- Ejemplo mínimo en `examples/placa_basica.py`
