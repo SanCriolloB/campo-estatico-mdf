@@ -1,0 +1,143 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teoría y fundamentos &mdash; documentación de campo-estatico-mdf - 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba61de6b"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Referencia de la API" href="api_reference.html" />
+    <link rel="prev" title="Bienvenido a la documentación de campo-estatico-mdf" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            campo-estatico-mdf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Teoría y fundamentos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ecuacion-de-laplace-y-metodo-de-diferencias-finitas">Ecuación de Laplace y método de diferencias finitas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metodos-iterativos">Métodos iterativos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#criterio-de-convergencia">Criterio de convergencia</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">Referencia de la API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">campo-estatico-mdf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Teoría y fundamentos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/teoria.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="teoria-y-fundamentos">
+<h1>Teoría y fundamentos<a class="headerlink" href="#teoria-y-fundamentos" title="Link to this heading"></a></h1>
+<section id="ecuacion-de-laplace-y-metodo-de-diferencias-finitas">
+<h2>Ecuación de Laplace y método de diferencias finitas<a class="headerlink" href="#ecuacion-de-laplace-y-metodo-de-diferencias-finitas" title="Link to this heading"></a></h2>
+<p>La ecuación de Laplace en 2D se expresa como:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 V}{\partial x^2} + \frac{\partial^2 V}{\partial y^2} = 0\]</div>
+<p>En una malla uniforme con paso <span class="math notranslate nohighlight">\(h\)</span>, la aproximación por diferencias finitas da:</p>
+<div class="math notranslate nohighlight">
+\[V_{i,j} = \frac{1}{4} \left(V_{i+1,j} + V_{i-1,j} + V_{i,j+1} + V_{i,j-1}\right)\]</div>
+<p>Este esquema es conocido como <em>stencil de cinco puntos</em>.</p>
+</section>
+<section id="metodos-iterativos">
+<h2>Métodos iterativos<a class="headerlink" href="#metodos-iterativos" title="Link to this heading"></a></h2>
+<p><strong>Jacobi:</strong> usa los valores de la iteración anterior:</p>
+<div class="math notranslate nohighlight">
+\[V_{i,j}^{(k+1)} = \frac{1}{4}(V_{i+1,j}^{(k)} + V_{i-1,j}^{(k)} + V_{i,j+1}^{(k)} + V_{i,j-1}^{(k)})\]</div>
+<p><strong>Gauss-Seidel:</strong> actualiza en el mismo paso los valores recién calculados:</p>
+<div class="math notranslate nohighlight">
+\[V_{i,j}^{(k+1)} = \frac{1}{4}(V_{i+1,j}^{(k)} + V_{i-1,j}^{(k+1)} + V_{i,j+1}^{(k)} + V_{i,j-1}^{(k+1)})\]</div>
+</section>
+<section id="criterio-de-convergencia">
+<h2>Criterio de convergencia<a class="headerlink" href="#criterio-de-convergencia" title="Link to this heading"></a></h2>
+<p>Se detiene cuando:</p>
+<div class="math notranslate nohighlight">
+\[\max |V^{(k+1)} - V^{(k)}| &lt; \varepsilon\]</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="index.html" class="btn btn-neutral float-left" title="Bienvenido a la documentación de campo-estatico-mdf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="Referencia de la API" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Santiago Criollo, Daniel Ramirez.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
