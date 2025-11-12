@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "campo-estatico-mdf"
+version = "0.1.0"
+description = "Solver 2D de Laplace por diferencias finitas (Jacobi/Gauss-Seidel) y cálculo del campo eléctrico."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.22"]
+
+[tool.setuptools]
+packages = ["campo_estatico_mdf"]
