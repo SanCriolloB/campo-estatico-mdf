@@ -17,8 +17,8 @@ En la **Fase 4**, publicaremos la documentación en **GitHub Pages** y la incrus
 """
 )
 
-# Puedes definir una variable de entorno DOCS_URL cuando la tengas publicada.
-docs_url = os.getenv("DOCS_URL", "").strip()
+# Definir una variable de entorno DOCS_URL
+docs_url = "https://SanCriolloB.github.io/campo-estatico-mdf/"
 
 if docs_url:
     st.success("Documentación publicada. Abre el enlace o usa el iframe más abajo.")
