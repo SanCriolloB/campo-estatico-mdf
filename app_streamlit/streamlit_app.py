@@ -8,11 +8,11 @@ from campo_estatico_mdf import LaplaceSolver2D
 
 st.set_page_config(
     page_title="Solución 2D: Laplace por MDF",
-    page_icon="🧮",
+    page_icon="",
     layout="wide",
 )
 
-st.title("🧮 Solución del campo electrostático 2D (MDF)")
+st.title(" Solución del campo electrostático 2D (MDF)")
 st.caption("Métodos: Jacobi y Gauss-Seidel • El usuario define el mallado N y los contornos")
 
 with st.sidebar:

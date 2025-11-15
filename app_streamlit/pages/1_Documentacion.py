@@ -13,7 +13,6 @@ Esta página muestra/enlaza la documentación técnica generada con **Sphinx**:
 - Referencia de la API (`LaplaceSolver2D`).
 - Tutoriales y ejemplos.
 
-En la **Fase 4**, publicaremos la documentación en **GitHub Pages** y la incrustaremos aquí.
 """
 )
 
@@ -31,6 +30,6 @@ if docs_url:
             st.warning(f"No fue posible incrustar el iframe: {e}")
 else:
     st.info(
-        "Aún no hay URL publicada. Cuando la tengamos (Fase 4), "
+        "Aún no hay URL publicada. Cuando la tengamos, "
         "configuraremos la variable de entorno **DOCS_URL** para mostrarla aquí."
     )
