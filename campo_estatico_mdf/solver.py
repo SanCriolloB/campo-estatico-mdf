@@ -1,7 +1,7 @@
-# campo_estatico_mdf/solver.py
 from __future__ import annotations
 import numpy as np
 from typing import Dict, Tuple, Optional
+
 
 class LaplaceSolver2D:
     """
@@ -32,7 +32,8 @@ class LaplaceSolver2D:
         max_iter : int
             Máximo de iteraciones.
         method : str
-            "jacobi" o "gauss_seidel".
+            "jacobi" o "gauss_seidel". También se acepta "gauss-seidel"
+            (se normaliza internamente).
         Lx, Ly : float
             Dimensiones físicas del dominio (para dx, dy).
         seed : int | None
@@ -44,7 +45,10 @@ class LaplaceSolver2D:
         self.bc = self._validate_bc(bc)
         self.epsilon = float(epsilon)
         self.max_iter = int(max_iter)
-        self.method = method.lower()
+
+        # Normalizar método: aceptar "gauss-seidel" y "gauss_seidel"
+        method_norm = method.lower().replace("-", "_")
+        self.method = method_norm
         if self.method not in {"jacobi", "gauss_seidel"}:
             raise ValueError("method debe ser 'jacobi' o 'gauss_seidel'")
 
@@ -77,16 +81,17 @@ class LaplaceSolver2D:
     def _init_grid(self) -> None:
         """Inicializa V y aplica condiciones de contorno Dirichlet."""
         self.V.fill(0.0)
-        self._apply_boundary_conditions(self.V)
+        self._apply_boundary_conditions(self.V, self.bc)
 
     @staticmethod
-    def _apply_boundary_conditions(V: np.ndarray, bc: Optional[Dict[str, float]] = None) -> None:
+    def _apply_boundary_conditions(
+        V: np.ndarray,
+        bc: Optional[Dict[str, float]] = None,
+    ) -> None:
         """
         Aplica los contornos Dirichlet sobre V.
         Si bc es None, se asume que V ya trae la info de borde (no hace nada).
         """
-        # Para permitir uso sin bc explícito, se usa atributo por fuera.
-        # Método estático con bc opcional para reuso en Jacobi.
         if bc is None:
             return
         N = V.shape[0]
@@ -113,8 +118,12 @@ class LaplaceSolver2D:
         """
         if self.method == "jacobi":
             return self._solve_jacobi()
-        else:
+        elif self.method == "gauss_seidel":
             return self._solve_gauss_seidel()
+        else:
+            # No debería ocurrir por la validación en __init__,
+            # pero se deja por robustez.
+            raise ValueError("method debe ser 'jacobi' o 'gauss_seidel'")
 
     def _solve_jacobi(self) -> Tuple[np.ndarray, int, float]:
         N = self.N
@@ -123,9 +132,12 @@ class LaplaceSolver2D:
         self.err_hist_.clear()
 
         for k in range(1, self.max_iter + 1):
-            # Promedio de vecinos (interior)
+            # Promedio de vecinos (interior) usando sólo la iteración anterior
             V_new[1:-1, 1:-1] = 0.25 * (
-                V[2:, 1:-1] + V[:-2, 1:-1] + V[1:-1, 2:] + V[1:-1, :-2]
+                V[2:, 1:-1] +    # abajo
+                V[:-2, 1:-1] +   # arriba
+                V[1:-1, 2:] +    # derecha
+                V[1:-1, :-2]     # izquierda
             )
 
             # Reimponer contornos
@@ -139,7 +151,7 @@ class LaplaceSolver2D:
                 self.n_iter_ = k
                 return self.V, self.n_iter_, err
 
-            # Siguiente iteración
+            # Siguiente iteración: intercambiamos referencias
             V, V_new = V_new, V
 
         # No convergió dentro de max_iter
@@ -148,20 +160,32 @@ class LaplaceSolver2D:
         return self.V, self.n_iter_, self.err_hist_[-1]
 
     def _solve_gauss_seidel(self) -> Tuple[np.ndarray, int, float]:
+        """
+        Implementación de Gauss-Seidel clásica:
+        - Actualización in-place (usa valores recién actualizados).
+        - Criterio de parada: max|ΔV| < epsilon.
+        """
         N = self.N
         V = self.V.copy()
         self.err_hist_.clear()
 
         for k in range(1, self.max_iter + 1):
             err_max = 0.0
-            # Actualización in-place (usa valores recién actualizados)
+
+            # Actualización in-place en el dominio interior
             for i in range(1, N - 1):
                 for j in range(1, N - 1):
-                    nuevo = 0.25 * (V[i + 1, j] + V[i - 1, j] + V[i, j + 1] + V[i, j - 1])
-                    diff = abs(nuevo - V[i, j])
+                    old_val = V[i, j]
+                    new_val = 0.25 * (
+                        V[i + 1, j] +  # abajo
+                        V[i - 1, j] +  # arriba
+                        V[i, j + 1] +  # derecha
+                        V[i, j - 1]    # izquierda
+                    )
+                    diff = abs(new_val - old_val)
                     if diff > err_max:
                         err_max = diff
-                    V[i, j] = nuevo
+                    V[i, j] = new_val
 
             # Reimponer contornos (por seguridad numérica)
             self._apply_boundary_conditions(V, self.bc)
@@ -172,6 +196,7 @@ class LaplaceSolver2D:
                 self.n_iter_ = k
                 return self.V, self.n_iter_, err_max
 
+        # No convergió dentro de max_iter
         self.V = V
         self.n_iter_ = self.max_iter
         return self.V, self.n_iter_, self.err_hist_[-1]
@@ -188,9 +213,9 @@ class LaplaceSolver2D:
         """
         if V is None:
             V = self.V
-        # Nota: numpy.gradient devuelve derivadas respecto a cada eje en orden de ejes.
-        # Para una matriz V[filas(y), columnas(x)]:
-        # dV_dy, dV_dx = np.gradient(V, dy, dx)
+
+        # numpy.gradient devuelve derivadas respecto a cada eje en orden de ejes:
+        # para V[filas(y), columnas(x)] => dV_dy, dV_dx
         dV_dy, dV_dx = np.gradient(V, self.dy, self.dx, edge_order=2)
         Ex = -dV_dx
         Ey = -dV_dy

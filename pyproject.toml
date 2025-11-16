@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "campo-estatico-mdf"
-version = "1.0.0"
+version = "1.0.2"
 description = "Simulador 2D del campo electrostático por método de diferencias finitas (Jacobi / Gauss-Seidel)."
 readme = "README.md"
 requires-python = ">=3.9"

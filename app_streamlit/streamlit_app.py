@@ -8,19 +8,39 @@ from campo_estatico_mdf import LaplaceSolver2D
 
 st.set_page_config(
     page_title="Solución 2D: Laplace por MDF",
-    page_icon="🧮",
+    page_icon="📐",
     layout="wide",
 )
 
-st.title("🧮 Solución del campo electrostático 2D (MDF)")
-st.caption("Métodos: Jacobi y Gauss-Seidel • El usuario define el mallado N y los contornos")
+st.title(" Solución del campo electrostático 2D (MDF)")
+st.caption("Métodos: Jacobi y Gauss-Seidel • El usuario define el mallado N, los contornos y los parámetros numéricos.")
 
 with st.sidebar:
     st.header("Parámetros de simulación")
-    N = st.number_input("Tamaño de la malla (N × N)", min_value=11, max_value=401, value=51, step=2,
-                        help="Usa impares moderados (31/51/101). Costo ~ O(N² · iter).")
-    epsilon = st.number_input("ε (tolerancia de convergencia)", min_value=1e-8, max_value=1e-2, value=1e-5, step=1e-6, format="%.1e")
-    max_iter = st.number_input("Máximo de iteraciones", min_value=1000, max_value=200000, value=20000, step=1000)
+    N = st.number_input(
+        "Tamaño de la malla (N × N)",
+        min_value=11,
+        max_value=401,
+        value=51,
+        step=2,
+        help="Usa valores impares moderados (31/51/101). Costo ~ O(N² · iter).",
+    )
+    epsilon = st.number_input(
+        "ε (tolerancia de convergencia)",
+        min_value=1e-8,
+        max_value=1e-2,
+        value=1e-5,
+        step=1e-6,
+        format="%.1e",
+        help="Criterio: max|ΔV| < ε.",
+    )
+    max_iter = st.number_input(
+        "Máximo de iteraciones",
+        min_value=1000,
+        max_value=200000,
+        value=20000,
+        step=1000,
+    )
     method = st.selectbox("Método numérico", ["jacobi", "gauss_seidel"])
 
     st.subheader("Condiciones de contorno (Voltaje)")
@@ -32,8 +52,20 @@ with st.sidebar:
         v_right = st.number_input("Derecha (x=Lx)", value=0.0, step=0.1)
         v_bottom = st.number_input("Abajo (y=Ly)", value=1.0, step=0.1)
 
-    Lx = st.number_input("Lx (longitud en x)", min_value=0.1, max_value=10.0, value=1.0, step=0.1)
-    Ly = st.number_input("Ly (longitud en y)", min_value=0.1, max_value=10.0, value=1.0, step=0.1)
+    Lx = st.number_input(
+        "Lx (longitud en x)",
+        min_value=0.1,
+        max_value=10.0,
+        value=1.0,
+        step=0.1,
+    )
+    Ly = st.number_input(
+        "Ly (longitud en y)",
+        min_value=0.1,
+        max_value=10.0,
+        value=1.0,
+        step=0.1,
+    )
 
     run_btn = st.button("▶️ Ejecutar simulación", use_container_width=True)
 
@@ -44,14 +76,24 @@ col_v, col_e = st.columns([1.1, 1.0])
 # Validación ligera
 if run_btn:
     try:
-        bc = {"left": float(v_left), "right": float(v_right),
-              "top": float(v_top), "bottom": float(v_bottom)}
+        bc = {
+            "left": float(v_left),
+            "right": float(v_right),
+            "top": float(v_top),
+            "bottom": float(v_bottom),
+        }
+
+        # Normalizar el método por si en el futuro se acepta "gauss-seidel"
+        method_norm = str(method).lower().replace("-", "_")
+
         solver = LaplaceSolver2D(
-            N=int(N), bc=bc,
+            N=int(N),
+            bc=bc,
             epsilon=float(epsilon),
             max_iter=int(max_iter),
-            method=str(method),
-            Lx=float(Lx), Ly=float(Ly)
+            method=method_norm,
+            Lx=float(Lx),
+            Ly=float(Ly),
         )
 
         t0 = time.perf_counter()
@@ -59,7 +101,10 @@ if run_btn:
         Ex, Ey = solver.compute_e_field(V)
         t1 = time.perf_counter()
 
-        status.success(f" Convergencia en {n_iter} iteraciones · error final = {err:.3e} · tiempo = {t1 - t0:.2f}s")
+        status.success(
+            f"Convergencia en {n_iter} iteraciones · "
+            f"error final = {err:.3e} · tiempo = {t1 - t0:.2f} s"
+        )
 
         # ---- Figura 1: Heatmap de V ----
         with col_v:
@@ -83,9 +128,14 @@ if run_btn:
             X, Y = np.meshgrid(x, y)
 
             fig2, ax2 = plt.subplots()
-            ax2.quiver(X[::step, ::step], Y[::step, ::step],
-                       Ex[::step, ::step], Ey[::step, ::step],
-                       pivot="mid", scale=50)
+            ax2.quiver(
+                X[::step, ::step],
+                Y[::step, ::step],
+                Ex[::step, ::step],
+                Ey[::step, ::step],
+                pivot="mid",
+                scale=50,
+            )
             ax2.set_xlim([0, Lx])
             ax2.set_ylim([Ly, 0])  # y=0 arriba en la imagen original
             ax2.set_xlabel("x")
@@ -109,6 +159,9 @@ if run_btn:
             st.write("Últimos 10:", [f"{h:.2e}" for h in hist[-10:]])
 
     except Exception as ex:
-        status.error(f" Error en la simulación: {ex}")
+        status.error(f"Error en la simulación: {ex}")
 else:
-    st.info("Configura los parámetros en la barra lateral y presiona **Ejecutar simulación**.")
+    st.info(
+        "Configura los parámetros en la barra lateral y presiona "
+        "**“Ejecutar simulación”**."
+    )

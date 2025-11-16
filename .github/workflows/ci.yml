@@ -24,12 +24,15 @@ jobs:
           pip install -r requirements.txt
           if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
           pip install -e .
+          
+      - name: Install dev dependencies
+        run: pip install -r requirements-dev.txt
 
       - name: Run tests
         run: pytest
 
       - name: Build docs (Sphinx)
-        run: python -m sphinx -T -E -b html docs/source docs/_build/html
+        run: python -m sphinx -b html docs/source docs/_build/html
 
       - name: Check package build
         run: |
