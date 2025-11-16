@@ -16,7 +16,6 @@ Contenido
    teoria
    tutorial
    api_reference
-   changelog
 
 Novedades recientes
 ===================

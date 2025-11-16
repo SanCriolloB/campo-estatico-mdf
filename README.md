@@ -1,7 +1,7 @@
 # campo-estatico-mdf
 
-Solver 2D de Laplace por diferencias finitas (Jacobi/Gauss-Seidel) y cálculo del campo eléctrico.
-Incluye GUI en **Streamlit** (multipágina) y, en Fase 4, documentación **Sphinx**.
+Solver 2D de Laplace por diferencias finitas (Jacobi/Gauss-Seidel) y cálculo del campo eléctrico.  
+Incluye GUI en **Streamlit** (multipágina) y documentación **Sphinx** publicada en GitHub Pages.:contentReference[oaicite:0]{index=0}
 
 ## Ejecutar GUI (Streamlit)
 ```bash
@@ -73,7 +73,7 @@ solver = LaplaceSolver2D(
     bc=bc,
     epsilon=1e-5,
     max_iter=20000,
-    method="jacobi"
+    method="jacobi", # o "gauss_seidel"
 )
 
 V, n_iter, err = solver.solve()
@@ -104,4 +104,4 @@ pip install numpy>=1.22
 
 **Autores:** Santiago Criollo & Daniel Ramirez 
 **Licencia:** MIT  
-**Versión:** v1.0.0
+**Versión:** v1.0.2
