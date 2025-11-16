@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentación del proyecto campo-estatico-mdf &mdash; campo-estatico-mdf 1.0.2</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a544a507"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Teoría y fundamentos" href="teoria.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            campo-estatico-mdf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="teoria.html">Teoría y fundamentos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial de uso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">Referencia de la API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">campo-estatico-mdf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentación del proyecto <em>campo-estatico-mdf</em></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="documentacion-del-proyecto-campo-estatico-mdf">
+<h1>Documentación del proyecto <em>campo-estatico-mdf</em><a class="headerlink" href="#documentacion-del-proyecto-campo-estatico-mdf" title="Link to this heading"></a></h1>
+<p>Este sitio contiene la documentación oficial del paquete <strong>campo-estatico-mdf</strong>,
+que resuelve la ecuación de Laplace en 2D mediante diferencias finitas (MDF)
+y métodos iterativos (Jacobi y Gauss–Seidel). Incluye también el cálculo del
+campo eléctrico y una interfaz gráfica en Streamlit.</p>
+<section id="contenido">
+<h2>Contenido<a class="headerlink" href="#contenido" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="teoria.html">Teoría y fundamentos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="teoria.html#ecuacion-de-laplace-y-metodo-de-diferencias-finitas">Ecuación de Laplace y método de diferencias finitas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="teoria.html#metodos-iterativos">Métodos iterativos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="teoria.html#criterio-de-convergencia">Criterio de convergencia</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial de uso</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#instalacion">Instalación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#imports-basicos">Imports básicos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#parametros-principales">Parámetros principales</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#valores-devueltos-por-solve">Valores devueltos por <code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#calculo-del-campo-electrico">Cálculo del campo eléctrico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#uso-con-streamlit-gui">Uso con Streamlit (GUI)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">Referencia de la API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#laplacesolver2d">LaplaceSolver2D</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="novedades-recientes">
+<h2>Novedades recientes<a class="headerlink" href="#novedades-recientes" title="Link to this heading"></a></h2>
+<section id="version-1-0-2-correccion-del-metodo-gaussseidel">
+<h3>Versión 1.0.2 — Corrección del método Gauss–Seidel<a class="headerlink" href="#version-1-0-2-correccion-del-metodo-gaussseidel" title="Link to this heading"></a></h3>
+<p>En esta versión se corrigió un error donde el método <strong>Gauss–Seidel</strong> ejecutaba
+solo una iteración sin actualizar correctamente el potencial.
+Ahora:</p>
+<ul class="simple">
+<li><p>Itera in-place correctamente.</p></li>
+<li><p>El criterio de convergencia <code class="docutils literal notranslate"><span class="pre">max|ΔV|</span> <span class="pre">&lt;</span> <span class="pre">epsilon</span></code> funciona como debía.</p></li>
+<li><p>Las soluciones convergen de forma comparable a Jacobi.</p></li>
+<li><p>Se añadieron pruebas unitarias de regresión para garantizar estabilidad.</p></li>
+</ul>
+</section>
+</section>
+<section id="instalacion">
+<h2>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>campo-estatico-mdf
+</pre></div>
+</div>
+</section>
+<section id="enlaces">
+<h2>Enlaces<a class="headerlink" href="#enlaces" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Repositorio GitHub: <a class="reference external" href="https://github.com/SanCriolloB/campo-estatico-mdf">https://github.com/SanCriolloB/campo-estatico-mdf</a></p></li>
+<li><p>Documentación en línea: (este sitio)</p></li>
+<li><p>Streamlit App: <a class="reference external" href="https://campo-estatico-mdf.streamlit.app">https://campo-estatico-mdf.streamlit.app</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="teoria.html" class="btn btn-neutral float-right" title="Teoría y fundamentos" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Santiago Criollo, Daniel Ramirez.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

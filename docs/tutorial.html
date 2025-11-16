@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial de uso &mdash; campo-estatico-mdf 1.0.2</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a544a507"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Referencia de la API" href="api_reference.html" />
+    <link rel="prev" title="Teoría y fundamentos" href="teoria.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            campo-estatico-mdf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="teoria.html">Teoría y fundamentos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial de uso</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion">Instalación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imports-basicos">Imports básicos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parametros-principales">Parámetros principales</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#valores-devueltos-por-solve">Valores devueltos por <code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculo-del-campo-electrico">Cálculo del campo eléctrico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uso-con-streamlit-gui">Uso con Streamlit (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#paginas-de-la-app">Páginas de la app</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">Referencia de la API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">campo-estatico-mdf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial de uso</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial-de-uso">
+<h1>Tutorial de uso<a class="headerlink" href="#tutorial-de-uso" title="Link to this heading"></a></h1>
+<p>En esta sección se muestra cómo utilizar el paquete <code class="docutils literal notranslate"><span class="pre">campo-estatico-mdf</span></code> para
+resolver la ecuación de Laplace en 2D, calcular el campo eléctrico y visualizar
+los resultados.</p>
+<section id="instalacion">
+<h2>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h2>
+<p>Desde PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>campo-estatico-mdf
+</pre></div>
+</div>
+<p>Para un entorno de desarrollo local:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="imports-basicos">
+<h2>Imports básicos<a class="headerlink" href="#imports-basicos" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">campo_estatico_mdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaplaceSolver2D</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">51</span>
+<span class="n">bc</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">LaplaceSolver2D</span><span class="p">(</span>
+    <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
+    <span class="n">bc</span><span class="o">=</span><span class="n">bc</span><span class="p">,</span>
+    <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;jacobi&quot;</span><span class="p">,</span>  <span class="c1"># o &quot;gauss_seidel&quot;</span>
+<span class="p">)</span>
+
+<span class="n">V</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+<span class="n">Ex</span><span class="p">,</span> <span class="n">Ey</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">compute_e_field</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iteraciones: </span><span class="si">{</span><span class="n">n_iter</span><span class="si">}</span><span class="s2">, Error final: </span><span class="si">{</span><span class="n">err</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Forma de V:&quot;</span><span class="p">,</span> <span class="n">V</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="parametros-principales">
+<h2>Parámetros principales<a class="headerlink" href="#parametros-principales" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> (<em>int</em>): número de puntos por lado de la malla (N×N).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bc</span></code> (<em>dict</em>): diccionario con condiciones de contorno Dirichlet:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code> (en Voltios).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epsilon</span></code> (<em>float</em>): tolerancia de convergencia. El criterio es:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="o">|</span><span class="n">ΔV</span><span class="o">|</span> <span class="o">&lt;</span> <span class="n">epsilon</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code> (<em>int</em>): máximo de iteraciones permitidas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code> (<em>str</em>): método iterativo:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;jacobi&quot;</span></code>: actualiza usando sólo la iteración anterior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;gauss_seidel&quot;</span></code> o <code class="docutils literal notranslate"><span class="pre">&quot;gauss-seidel&quot;</span></code>: actualiza in-place, reutilizando
+valores recién actualizados dentro de la misma iteración.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="valores-devueltos-por-solve">
+<h2>Valores devueltos por <code class="docutils literal notranslate"><span class="pre">solve()</span></code><a class="headerlink" href="#valores-devueltos-por-solve" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">V</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">V</span></code> (<em>np.ndarray</em>): matriz 2D (N×N) con el potencial electrostático.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter</span></code> (<em>int</em>): número de iteraciones realizadas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">err</span></code> (<em>float</em>): valor de <code class="docutils literal notranslate"><span class="pre">max|ΔV|</span></code> en la última iteración.</p></li>
+</ul>
+</section>
+<section id="calculo-del-campo-electrico">
+<h2>Cálculo del campo eléctrico<a class="headerlink" href="#calculo-del-campo-electrico" title="Link to this heading"></a></h2>
+<p>Para obtener el campo eléctrico <code class="docutils literal notranslate"><span class="pre">E</span> <span class="pre">=</span> <span class="pre">-∇V</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ex</span><span class="p">,</span> <span class="n">Ey</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">compute_e_field</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>donde:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ex</span></code> es la componente en x (<code class="docutils literal notranslate"><span class="pre">-∂V/∂x</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ey</span></code> es la componente en y (<code class="docutils literal notranslate"><span class="pre">-∂V/∂y</span></code>).</p></li>
+</ul>
+</section>
+<section id="uso-con-streamlit-gui">
+<h2>Uso con Streamlit (GUI)<a class="headerlink" href="#uso-con-streamlit-gui" title="Link to this heading"></a></h2>
+<p>El repositorio incluye una interfaz gráfica en Streamlit para experimentar con
+el solver de forma interactiva.</p>
+<p>Ejecutar la app localmente:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activar entorno virtual (ejemplo en Windows con Git Bash)</span>
+<span class="nb">source</span><span class="w"> </span>.venv/Scripts/activate
+<span class="c1"># Instalar dependencias</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="c1"># Instalar el paquete en editable</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<span class="c1"># Lanzar la app</span>
+streamlit<span class="w"> </span>run<span class="w"> </span>app_streamlit/streamlit_app.py
+</pre></div>
+</div>
+<section id="paginas-de-la-app">
+<h3>Páginas de la app<a class="headerlink" href="#paginas-de-la-app" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Simulación</strong>: permite configurar N, <code class="docutils literal notranslate"><span class="pre">epsilon</span></code>, <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>, método iterativo
+y contornos, mostrando:</p>
+<ul>
+<li><p>Mapa de potencial <code class="docutils literal notranslate"><span class="pre">V</span></code> (heatmap).</p></li>
+<li><p>Campo eléctrico <code class="docutils literal notranslate"><span class="pre">E</span></code> (gráfico quiver).</p></li>
+<li><p>Métricas de convergencia: número de iteraciones, error final, tiempo, etc.</p></li>
+</ul>
+</li>
+<li><p><strong>Documentación</strong>: enlaza e incrusta la documentación generada con Sphinx
+(GitHub Pages) dentro de la propia app mediante un iframe.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="teoria.html" class="btn btn-neutral float-left" title="Teoría y fundamentos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="Referencia de la API" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Santiago Criollo, Daniel Ramirez.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
